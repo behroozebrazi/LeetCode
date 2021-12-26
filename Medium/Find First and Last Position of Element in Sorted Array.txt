@@ -1,0 +1,33 @@
+https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:        
+        left, right = 0, len(nums) - 1
+        left_ret, right_ret = -1, -1
+        
+        while left <= right and (left_ret == -1 or right_ret == -1):
+            mid = (left + right) // 2
+            if left_ret == -1 and nums[left] == target:
+                left_ret = left
+            if right_ret == -1 and nums[right] == target:
+                right_ret = right
+                
+            if nums[mid] == target:
+                if nums[left] < target:
+                    left += 1
+                if nums[right] > target:
+                    right -= 1
+            elif nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+            
+        return [left_ret, right_ret]
+    
+    # Explanation:
+    # I use two extra variables for keeping track of left and right target values. I search in binary 
+    # and if the left boundary reaches the target value, I keep the index in the tracking variable, 
+    # and for the right boundary do the same. Only one time the tracking variables are updated. Finally, 
+    # if the left and right tracking variables are found or the left boundary is greater than the right one,
+    # I stop searching and return the tracking variables. Initially, the tracking variables are -1 as 
+    # the default value.
