@@ -1,0 +1,49 @@
+https://leetcode.com/problems/search-in-rotated-sorted-array/
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        if len(nums) <= 1 or nums[0] < nums[-1]:
+            return self.searchInsert(nums, target)
+        left, mid, right = 0, 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid - 1] > nums[mid]:
+                break
+            if nums[mid] > nums[mid + 1]:
+                mid += 1
+                break
+            if nums[mid] < nums[left]:
+                right = mid 
+            if nums[mid] > nums[right]:
+                left = mid 
+        second_part = nums[mid] <= target and target <= nums[-1]
+        if second_part:
+            position = self.searchInsert(nums[mid:], target)
+        else:
+            position = self.searchInsert(nums[:mid], target)
+        if position >= 0 and second_part:
+            position += mid
+        return position
+        
+    def searchInsert(self, nums: List[int], target: int):
+        left, mid, right = 0, 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+        return -1
+    
+    # Explanation:
+    # First, I define a helper function for finding a target position in the given array or return -1 
+    # as default if it does not found. Then, I check that if the given array's size is less than 2, 
+    # so I only return the helper function with the array and target value. Next, I found the minimum 
+    # value index of the array. It means that I found the minimum value's position in the array where 
+    # it rotates on it as a pivot. Then, if the target value is in the left part of the given array, 
+    # I return the helper function with the left part and the target value. But if the target is in 
+    # the right part of the given array, I return the helper function with the right part of the given 
+    # array and the target value plus the size of the left part of the given array if the target 
+    # exists in the right part.
