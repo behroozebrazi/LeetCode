@@ -1,0 +1,23 @@
+https://leetcode.com/problems/top-k-frequent-elements/
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        counter = defaultdict(int)
+        for num in nums:
+            counter[num] += 1
+        heap = []
+        for key, val in counter.items():
+            heappush(heap, (-val, key))
+        ret_lst = []
+        for i in range(k):
+            if heap:
+                ret_lst.append(heappop(heap)[1])
+            else:
+                break
+        return ret_lst
+        
+    # Explanation:
+    # First, I count the number of numbers in the given list. Then, I create a heap of negative values and
+    # their keys pair as tuples. The heap sorts them according to the negative values of the dictionary 
+    # because it sorts them from smallest to greater, and I need greater ones finally. Next, I extract 
+    # the k number of the heap if it is not empty, and return them as a new list.
