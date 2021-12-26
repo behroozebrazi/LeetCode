@@ -1,0 +1,20 @@
+https://leetcode.com/problems/search-insert-position/
+
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left, mid, right = 0, 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid - 1
+        return left
+    
+    # Explanation:
+    # It limits the searching boundary with left and right index that to reach to the middle index
+    # which there is the target value. But if there is no target value in the array, it returns 
+    # the left index of the final boundary which is the right position of the target which could 
+    # be new position of the target value.
