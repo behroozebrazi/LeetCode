@@ -1,0 +1,21 @@
+https://leetcode.com/problems/valid-parentheses/
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        pair = {"(": ")", "[": "]", "{": "}"}
+        stack = []
+        for ss in s:
+            if ss in pair.keys():
+                stack.append(ss)
+            elif stack and pair[stack[-1]] == ss:
+                stack.pop()
+            else:
+                return False
+        return stack == []
+    
+    # Explanation:
+    # First, I build a dictionary of pair characters. Then I check each character of the given string.
+    # If it is the open one I add it to a stack, and if it is a closed one I check its pair at the top
+    # of the stack and remove it. Hence, if each of these conditions doesn't satisfy or the stack was 
+    # empty and it reaches the close one or finally the stack was not empty, it returns false, 
+    # otherwise it returns true.
