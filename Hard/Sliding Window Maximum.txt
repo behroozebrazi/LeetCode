@@ -1,0 +1,35 @@
+https://leetcode.com/problems/sliding-window-maximum/
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        window_size = len(nums)
+        ret_lst = []
+        heap = []
+
+        for i in range(k):
+            heappush(heap, (-nums[i], i))
+        ret_lst.append(-heap[0][0])
+                
+        idx = k
+        while idx < window_size:
+            idx_k = idx - k
+            heappush(heap, (-nums[idx], idx))
+            while heap[0][1] <= idx_k:
+                heappop(heap)
+            ret_lst.append(-heap[0][0])
+            idx += 1
+            
+        return ret_lst
+            
+    # Explanation:
+    # This code has 2 parts. First, it places the first k elements of the given list in a heap such that
+    # they are tuples of negative of the element and its index in the given list. Then, copy the negative
+    # of the first and first element of the heap in a returned list.
+    # Second, it goes through the rest of the elements in the given list. In each step, it added the new 
+    # element from the given list to the heap. Then if the first element of the heap is from the interval
+    # of the last reading and k previous elements of it, it considers it as the maximum value in the last
+    # k elements and copies in the returned list. If the first element of the heap is not from the specific
+    # interval, it pops the first element and checks again.
+    # The heap keeps track of the given list's indices in the second element of each tuple. The first
+    # element of each tuple keeps negative of the given list's values. I use negative because the heap
+    # is sorted in descending.
