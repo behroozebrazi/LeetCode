@@ -1,0 +1,44 @@
+https://leetcode.com/problems/reorder-list/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        if not head or not head.next or not head.next.next:
+            return head
+        
+        lst = []
+        while head:
+            lst.append(head)
+            head = head.next
+            lst[-1].next = None
+            
+        pointer = ListNode()
+        head = pointer
+        mid = int(len(lst) / 2)
+        for idx in range(mid):
+            pointer.next = lst[idx]
+            pointer.next.next = lst[-idx - 1]
+            pointer = pointer.next.next
+
+        if len(lst) / 2 != mid:
+            pointer.next = lst[mid]
+        return head.next
+    
+        # pointer1 = head
+        # while pointer1 and pointer1.next:
+        #     pointer2 = pointer1.next
+        #     while pointer2 and pointer2.next and pointer2.next.next:
+        #         pointer2 = pointer2.next
+        #     if pointer2.next:
+        #         pointer2.next.next = pointer1.next
+        #         pointer1.next = pointer2.next
+        #         pointer2.next = None
+        #     pointer1 = pointer1.next.next
+        # return head
