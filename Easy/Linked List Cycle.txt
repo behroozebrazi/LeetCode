@@ -1,0 +1,19 @@
+https://leetcode.com/problems/linked-list-cycle/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        track_nodes = defaultdict(int)
+        index = 0
+        while head:
+            if head in track_nodes:
+                return True
+            track_nodes[head] = index
+            head = head.next
+            index += 1
+        return False
