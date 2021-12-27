@@ -1,0 +1,31 @@
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, val: int) -> None:        
+        if self.stack and self.stack[-1][1] < val:
+            self.stack.append((val, self.stack[-1][1]))
+        else:
+            self.stack.append((val, val))
+                                  
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]
+
+    # Explanation:
+    # I define a list as a stack, but I record a tuple as each element. The tuple contains the given value
+    # and the smallest value from the first to the last value. It is fast to keep track of the smallest
+    # value and return it, but its memory complexity is O(n) which is not good.
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
