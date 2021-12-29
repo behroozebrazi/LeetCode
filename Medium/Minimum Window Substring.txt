@@ -1,0 +1,30 @@
+https://leetcode.com/problems/minimum-window-substring/submissions/
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        window = defaultdict(int)
+        for ch in t:
+            window[ch] -= 1
+        left, minLeft, minWindow = 0, 0, len(s) + 1
+        
+        for right in range(len(s)):
+            window[s[right]] += 1
+            if minWindow < right - left:
+                window[s[left]] -= 1
+                left += 1
+            while min(window.values()) >= 0:
+                minLeft, minWindow = left, right - left
+                window[s[left]] -= 1
+                left += 1
+
+        return s[minLeft: minLeft + minWindow + 1] if minWindow < len(s) else ""
+
+    # Explanation:
+    # I mapped the number of characters of string t is negative. I walk through the characters of string s
+    # and add one for each character on the map. In each step, if the minimum of values of the map is 
+    # non-negative, this window contains the characters of the string t. Then, I keep the window length and
+    # the left-most index of the minimum window and remove the left-most element from the window repeatedly
+    # until the values of the map contain the negative value or the current window does not satisfy the
+    # condition. I keep the left index and the window length of the minimum satisfy window. Also, in each
+    # step, if the length of the current window is greater than the minimum window length, I drop the 
+    # left-most element of the window and update the left index of the window.
