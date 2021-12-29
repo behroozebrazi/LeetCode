@@ -1,0 +1,22 @@
+https://leetcode.com/problems/same-tree/submissions/
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if p == None and q == None:
+            return True
+        if p != None and q != None and p.val == q.val:
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return False
+        
+# Explanation:
+# If a node is a None it means that it is the end of a branch.
+# The function is recursive, and I check both corresponding nodes in p and q at the same time. Then I move 
+# to the left and right nodes on both p and q at the same time and check again the value or none. 
+# The function returns the AND of all recurtions. The function returns false immediately if it faces a not
+# similar node and does not continue the rest of the trees.
