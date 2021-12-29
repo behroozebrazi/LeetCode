@@ -1,0 +1,19 @@
+https://leetcode.com/problems/max-consecutive-ones-iii/submissions/
+
+class Solution:
+    def longestOnes(self, nums: List[int], k: int) -> int:
+        maxOnes = 0
+        left, right = 0, 0
+        for right in range(len(nums)):
+            if nums[right] == 0:
+                k -= 1
+            if k < 0:
+                if nums[left] == 0:
+                    k += 1
+                left += 1
+        return right - left + 1
+    
+    # Explanation:
+    # I count the number of 0 from the left side of the array. If it passes from k numbers, I move one step
+    # from the left boundary to the right. If the left side element is zero, I remove a zero from k numbers.
+    # Finally, the result will be the distance between the left and right index plus one.
