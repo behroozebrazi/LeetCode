@@ -1,0 +1,34 @@
+https://leetcode.com/problems/course-schedule/
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        
+        def findCycle(course):
+            if visitCourses[course] == 1:
+                return True
+            if visitCourses[course] == 2:
+                return False
+            
+            visitCourses[course] = 1
+            for c in courses[course]:
+                if findCycle(c):
+                    return True
+            visitCourses[course] = 2
+            return False            
+            
+        courses = [[] for _ in range(numCourses)]
+        for course, preCourse in prerequisites:
+            courses[preCourse].append(course)
+        visitCourses = [0 for _ in range(numCourses)]
+        
+        for i in range(numCourses):
+            if visitCourses[i] != 2 and findCycle(i):
+                return False
+        return True
+
+# Explanation:
+# First, I create a graph of prerequisite courses and a list for tracking visited vertices.
+# I visit each vertex and its children recursively. If I visit the original vertex when I am
+# visiting its descendants, I detect a cycle in the graph. And if I complete searching a
+# vertex for a cycle, I mark the vertex as visited completely without any cycle.
+# I iterate all vertices for detecting a cycle if they did not visit completely.
