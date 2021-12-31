@@ -1,0 +1,27 @@
+https://leetcode.com/problems/binary-tree-right-side-view/submissions/
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        self.rightSide = []
+
+        def helper(p, deep):
+            if p == None:
+                return
+            if deep > len(self.rightSide):
+                self.rightSide.append(p.val)
+            helper(p.right, deep + 1)
+            helper(p.left, deep + 1)
+
+        helper(root, 1)
+        return self.rightSide
+        
+# Explanation:
+# I define a global list and a helper function. The helper function keeps track of the deep of the tree.
+# In each level, only the most right element is kept in the list. The helper function first checks the
+# right node, and then, checks the left node.
