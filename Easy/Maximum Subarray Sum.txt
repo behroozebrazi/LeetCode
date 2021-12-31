@@ -1,0 +1,19 @@
+https://leetcode.com/problems/maximum-subarray/submissions/
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        maxSum, maxSumCurr = nums[0], nums[0]
+
+        for i in range(1, len(nums)):
+            if maxSumCurr > 0:
+                maxSumCurr += nums[i]
+            else:
+                maxSumCurr = nums[i]
+            if maxSum < maxSumCurr:
+                maxSum = maxSumCurr
+
+        return maxSum
+        
+# Explanation:
+# It sums subsequence elements, and if it is negative, it resets to zero. At each iteration, it keeps
+# the maximum sum from the beginning.
