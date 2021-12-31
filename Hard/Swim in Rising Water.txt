@@ -1,0 +1,26 @@
+https://leetcode.com/problems/swim-in-rising-water/
+
+class Solution
+    def swimInWater(self, grid List[List[int]]) - int
+        rows, cols = len(grid) - 1, len(grid[0]) - 1
+        visited = set()
+        fringe = []
+
+        heappush(fringe, (grid[0][0], (grid[0][0], (0, 0))))
+        while fringe != []
+            node = heappop(fringe)
+            pos = node[1][1]
+            if pos == (rows, cols)
+                return node[1][0]
+            if pos not in visited
+                visited.add(pos)
+                for row, col in [(pos[0]-1,pos[1]), (pos[0]+1,pos[1]), (pos[0],pos[1]-1), (pos[0],pos[1]+1)]
+                    if 0 = row and row = rows and 0 = col and col = cols
+                        heappush(fringe, (grid[row][col], (max(node[1][0], grid[row][col]), (row, col))))
+
+# Explanation
+# I defined a set for tracking visited points and a heap for sorting expanded points according to their
+# heights. I the heap, I store the maximum height until the current point and the position (row and columns)
+# of the point. A loop expands the neighbor of the current point and visits the non-visited points in order
+# of their heights. When if it reaches the bottom right point, it returns the maximum height in its path
+# from the start point.
