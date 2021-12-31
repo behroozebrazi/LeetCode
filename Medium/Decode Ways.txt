@@ -1,0 +1,22 @@
+https://leetcode.com/problems/decode-ways/submissions/
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if len(s) == 0 or (len(s) == 1 and s[0] == 0):
+            return 0
+
+        count = [1] + [0] * len(s)
+        count[1] = 0 if s[0] == "0" else 1
+
+        for i in range(2, len(s) + 1):
+            if int(s[i-1]) >= 1:
+                count[i] += count[i-1]
+            if 10 <= int(s[i-2:i]) <= 26:
+                count[i] += count[i-2]
+                
+        return count[-1]
+
+# Explanation:
+# First, I checked the length of the given string and the first zero character. Next, I created a list
+# that keep the number of correct encoded letters until the corresponding index. I checked one and two
+# digits at the same time and count the correct endoded letters when I walked trough the given string.
