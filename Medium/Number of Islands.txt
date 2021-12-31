@@ -1,0 +1,25 @@
+https://leetcode.com/problems/number-of-islands/submissions/
+
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        rows, columns = len(grid), len(grid[0])
+        
+        def erase_island(row, column):
+            if grid[row][column] == '0':
+                return
+            grid[row][column] = '0'
+            for r, c in [(row-1,column), (row+1,column), (row,column-1), (row,column+1)]:
+                if 0 <= r and r < rows and 0 <= c and c < columns:
+                    erase_island(r, c)
+        numberOfIsland = 0
+        for row in range(rows):
+            for column in range(columns):
+                if grid[row][column] == '1':
+                    erase_island(row, column)
+                    numberOfIsland += 1
+        return numberOfIsland
+    
+# Explanation:
+# When it finds a '1', it counts an island, and then, it converts its '1' and all neighbors
+# that are '1' to '0'. It repeats this method to the four neighbors until it reaches '0', so
+# it terminates. This method is applied to all grids.
