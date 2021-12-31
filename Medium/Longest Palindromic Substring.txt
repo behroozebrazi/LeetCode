@@ -1,0 +1,40 @@
+https://leetcode.com/problems/longest-palindromic-substring/submissions/
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        
+        def compare(left, right, length):
+            for i in range(length):
+                if s[left - i] != s[right + i]:
+                    return i
+            return length
+        
+        maxStart, maxEnd, maxLength = 0, 1, 1
+        for i in range(len(s) - 1):
+            # middle odd
+            half = min(i, len(s) - i - 1)
+            if half*2+1 > maxLength:
+                match = compare(i-1, i+1, half)
+                length = match * 2 + 1
+                if length > maxLength:
+                    maxStart, maxEnd = i - match, i + match + 1
+                    maxLength = length
+            # middle even
+            if s[i] == s[i+1]:
+                half = min(i, len(s) - i - 2)
+                if half*2+2 > maxLength:
+                    match = compare(i-1, i+2, half)
+                    length = match * 2 + 2
+                    if length > maxLength:
+                        maxStart, maxEnd = i - match, i + match + 2
+                        maxLength = length
+
+        return s[maxStart: maxEnd]
+    
+# Explanation:
+# First, I define a function for finding the biggest match position of the left and right of
+# the pivot. Next, I walk through in string and check symmetric words from left to right when
+# the pivot # is one or two characters. If the length of a slice of the word is less than the
+# maximum symmetric word that I found until that step, I do not check the word.
+# I only keep track of the first and the last indices of the largest symmetric word and its length,
+# and the space complexity is O(1).
