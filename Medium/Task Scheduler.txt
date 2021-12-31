@@ -1,0 +1,23 @@
+https://leetcode.com/problems/task-scheduler/submissions/
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        if n == 0:
+            return len(tasks)
+        
+        counter = sorted(list(Counter(tasks).values()))
+        maxNum_1 = counter.pop() - 1
+        result = maxNum_1 * n
+        
+        while counter and result > 0:
+            result -= min(maxNum_1, counter.pop())
+        
+        result = max(result, 0) + len(tasks)
+        return result
+    
+# Explanation:
+# For n = 0, we need to return the length of the given list. First, we make a hashmap and count the
+# number of each letter in the given list. Then, we make and sort a list of the hashmap values. 
+# We know the maximum of  n-1 times of letter's type is prosses in the CPU, but we need minus the 
+# extra counts. Hence, we create a loop for decreasing the extra counts. After counting the extra 
+# process more than the number of tasks, we add the number of tasks to the resulting number.
