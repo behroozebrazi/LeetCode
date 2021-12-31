@@ -1,0 +1,26 @@
+https://leetcode.com/problems/gas-station/
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        total_tank = 0
+        tank = 0
+        start = 0
+        
+        for i in range(len(gas)):
+            remain = gas[i] - cost[i]
+            total_tank += remain
+            tank += remain
+            if tank < 0:
+                start = i + 1
+                tank = 0
+        
+        if total_tank >= 0:
+            return start
+        return -1
+
+# Explanation:
+# I use the windows method. Initially, the start station is the first station. If the difference of
+# total gases and total costs be negative, the start point is moved to the next index (station) of 
+# this interval and reset the tank to zero, because the result of all this interval's indices will 
+# be negative to the current index (station).
+# If the total difference between gases and costs be negative, so there is no result.
