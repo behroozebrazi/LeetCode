@@ -1,0 +1,31 @@
+https://leetcode.com/problems/kth-smallest-element-in-a-bst/submissions/
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        self.k = k
+        
+        def helper(p):
+            if self.k > 0 and p.left != None:
+                smallest = helper(p.left)
+            self.k -= 1
+            if self.k == 0:
+                return p.val
+            if self.k > 0 and p.right != None:
+                smallest = helper(p.right)
+            if self.k <= 0:
+                return smallest
+            return None
+        
+        return helper(root)
+
+# Explanation:
+# I use In Order technique. First, I go to the left node, then the current node, and then the right node.
+# In each step, I decrease one from the k. when k reaches zero, which means the current value in the kth
+# smallest value. After that, I do not check the rest of the tree and return the value corresponding
+# to k = 0. I define a global variable for the recursion helper function.
