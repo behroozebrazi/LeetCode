@@ -1,0 +1,22 @@
+https://leetcode.com/problems/boats-to-save-people/
+
+class Solution:
+    def numRescueBoats(self, people: List[int], limit: int) -> int:
+        people.sort()
+        light, heavy = 0, len(people) - 1
+        boats = 0
+
+        while light <= heavy:
+            if people[light] + people[heavy] <= limit:
+                light += 1
+            heavy -= 1
+            boats += 1
+
+        return boats
+
+# Explanation:
+# First, I sort the given list. Then, I move from begin and end of the list and compare 
+# the sum of them with the weight limit. If it is satisfied, I move one step both begin 
+# and end indices towards each other. Otherwise, I move one step the end index toward the
+# beginning index. I iterate this method and count the loop until the beginning index passes
+# the end index. The counted result is the number of boats. 
