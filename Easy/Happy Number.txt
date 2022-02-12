@@ -1,0 +1,16 @@
+https://leetcode.com/problems/happy-number/submissions/
+
+class Solution:
+    def isHappy(self, n: int) -> bool:
+
+        def sqr_sum(m):
+            result = 0
+            while m > 9:
+                result = result + (m % 10) ** 2
+                m = m // 10
+            return result + m ** 2
+            
+        while n > 6:
+            n = sqr_sum(n)
+            
+        return n == 1
