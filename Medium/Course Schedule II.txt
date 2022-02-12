@@ -1,0 +1,29 @@
+https://leetcode.com/problems/course-schedule-ii/submissions/
+
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        def findCycle(course):
+            if visitCourses[course] == 1:
+                return True
+            if visitCourses[course] == 2:
+                return False
+            
+            visitCourses[course] = 1
+            for c in courses[course]:
+                if findCycle(c):
+                    return True
+            visitCourses[course] = 2
+            orderedCourses.insert(0, course)
+            return False            
+
+        orderedCourses = []
+        visitCourses = [0 for _ in range(numCourses)]
+        courses = [[] for _ in range(numCourses)]
+        for course, preCourse in prerequisites:
+            courses[preCourse].append(course)
+
+        for i in range(numCourses):
+            if visitCourses[i] != 2 and findCycle(i):
+                return []
+            
+        return orderedCourses
