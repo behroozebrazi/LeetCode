@@ -1,0 +1,18 @@
+https://leetcode.com/problems/isomorphic-strings/
+
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        match = dict()
+        set_t = set()
+        for i in range(len(s)):
+            if s[i] in match:
+                if match[s[i]] != t[i]:
+                    return False
+            else:
+                if t[i] in set_t:
+                    return False
+                match[s[i]] = t[i]
+                set_t.add(t[i])
+        return True
