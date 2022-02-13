@@ -1,0 +1,22 @@
+https://leetcode.com/problems/swap-nodes-in-pairs/
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        sentinel = ListNode(0, head)
+        head = sentinel
+        while head and head.next and head.next.next:
+            temp1 = head.next # 1
+            temp2 = head.next.next # 2
+            temp3 = head.next.next.next # 3
+            head.next.next.next = temp1 # 2->1
+            head.next.next = temp3 # 1->3
+            head.next = temp2 # heap->2
+            
+            head = head.next.next
+        
+        return sentinel.next
